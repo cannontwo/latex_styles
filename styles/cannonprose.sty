@@ -39,6 +39,7 @@
 \pagestyle{fancy}
 \setstretch{1.2}
 
+% Header and footer styling
 \fancyhead{}
 \fancyfoot{}
 \renewcommand{\headrule}{\hbox to\headwidth{%
@@ -48,10 +49,13 @@
 \fancyhead[RO,RE]{\foo@lastname}
 \fancyfoot[R]{\thepage}
 
+% Title styline
 \renewcommand*{\maketitle}{%
-    {\Large\raggedleft\scshape{\@title}} \hfill {\raggedright\@date}\vspace*{0.5em}\\
+    {\Large\bf\raggedleft\color{Orchid}{\@title}} \hfill {\raggedright\@date}\vspace*{0.5em}\\
     {\large\it\raggedleft\@author}\\
 }
+
+\titlespacing{\section}{0pt}{1em}{0pt}
 
 % Auto calculation of Bringhurst-ian textwidth (~66 chars)
 \newcommand*\GetTextWidth[3][\normalfont]{{#1%
@@ -63,6 +67,11 @@
 \newlength\bringhurstwdt
 \GetTextWidth{\bringhurstwdt}{66}
 \geometry{textwidth=\bringhurstwdt}
+
+% New margin command
+\newcommand{\linedmarginnote}[1]{%
+    \marginnote{\textcolor{Orchid}{\vrule} \hfill \begin{minipage}{0.95\hsize}#1\end{minipage}}
+}
 
 % Common Components
 \input{styles/common.def}
