@@ -1,0 +1,68 @@
+% Made by Cannon Lewis
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cannonprose}
+
+% Packages
+\usepackage[font=footnotesize]{caption}
+\usepackage[lmargin=1in,bmargin=1in,tmargin=1in,
+            marginparwidth=4cm,marginparsep=1cm]{geometry}
+\usepackage{setspace}
+\usepackage[activate=true,
+            final,
+            tracking=true,
+            factor=1100,
+            stretch=20,
+            shrink=20
+            ]{microtype}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[tiny,compact]{titlesec}
+\usepackage{marginnote}
+
+\RequirePackage{kvoptions}
+
+% Package Options
+\SetupKeyvalOptions{
+    family=foo,
+    prefix=foo@
+}
+
+\DeclareStringOption[Lewis]{lastname}[Lewis]
+\DeclareStringOption[Test Prose]{title}[Test Prose]
+
+\ProcessKeyvalOptions*
+
+% Styling
+\pagestyle{fancy}
+\setstretch{1.2}
+
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{Orchid}\leaders\hrule height \headrulewidth\hfill}}
+
+\fancyhead[LO,LE]{\foo@title}
+\fancyhead[RO,RE]{\foo@lastname}
+\fancyfoot[R]{\thepage}
+
+\renewcommand*{\maketitle}{%
+    {\Large\raggedleft\scshape{\@title}} \hfill {\raggedright\@date}\vspace*{0.5em}\\
+    {\large\it\raggedleft\@author}\\
+}
+
+% Auto calculation of Bringhurst-ian textwidth (~66 chars)
+\newcommand*\GetTextWidth[3][\normalfont]{{#1%
+    \settowidth{#2}{abcdefghijklmnopqrstuvwxyz}%
+    \setlength{#2}{0.03193#2}%
+    \addtolength{#2}{0.44961pt}%
+    \setlength{#2}{#3#2}%
+    \global#2=#2}}
+\newlength\bringhurstwdt
+\GetTextWidth{\bringhurstwdt}{66}
+\geometry{textwidth=\bringhurstwdt}
+
+% Common Components
+\input{styles/common.def}

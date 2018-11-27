@@ -1,0 +1,10 @@
+% Made by Cannon Lewis
+
+% Editing Macros
+\newcommand\fixme[2][FIXME]{\textcolor{red}{\textbf{#1:} #2}}
+
+% Math Macros
+\newcommand{\expect}[1]{\mathbb{E}\left[#1\right]}
+\newcommand{\inftyint}{\int_{-\infty}^\infty}
+\newcommand{\conv}[1]{\overset{#1}{\to}}
+\newcommand{\st}[0]{\>\vert\>}

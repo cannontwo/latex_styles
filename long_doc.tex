@@ -1,0 +1,168 @@
+% A modified copy of my NDSEG Research Proposal
+\documentclass[10pt]{article}
+
+\usepackage[lastname=Lewis,title={Research Proposal}]{styles/cannonprose}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\title{Research Proposal}
+\author{W. Cannon Lewis II}
+
+\maketitle
+
+\section*{Motivation}
+
+Intelligent robots such as autonomous transports, unmanned aerial vehicles,
+and small, agile ground vehicles will be key to the future of combat. In the
+near term, these technologies enable enhanced logistics and surveillance without
+endangering human lives, and hence dramatically expand the options, abilities,
+and safety of soldiers on the ground. Recent advances in artificial intelligence
+and machine learning have driven a surge of public interest in intelligent
+systems such as self-driving cars. However, the companies currently developing
+self-driving cars and other consumer robotics benefit from strong modeling
+\marginnote{This is a test margin note on the first page. It sticks out here, but
+aligns below.}
+assumptions, such as the presence of paved roads and traffic regulations, that
+often do not apply in military applications. The environments that military
+robots must navigate are frequently unmodeled, unstructured, and uncertain, from
+the relatively simple task of rapid off-road navigation to persistent
+aerial surveillance of a unmapped towns. Thus, the Army has need of intelligent
+systems that are capable of adapting to unknown or changing conditions.
+Furthermore, since Army robots are expected to be deployed in mixed-autonomy
+teams composed of soldiers and heterogeneous robotic systems,
+the desired intelligent systems must be explainable and amenable to human
+intervention. These twin problems motivate my research: we need robots that are
+capable of adapting to unforeseen circumstances, but which do so in ways that
+allow for human intervention.
+
+\section*{Core Research Idea}
+As a motivating example, consider the problem of maneuvering an agile ground
+vehicle in high-slip, muddy terrain. This problem is representative of a broad
+class of open problems: that of navigation in an environment whose dynamics are
+defined by continuous, differential dynamics with external disturbances. These
+environments are difficult to model precisely, which places them largely outside
+the purview of existing methods for motion planning.
+Existing methods for motion planning tend to assume that a robot's environment
+will obey simple, predictable dynamics, but problems such as agile navigation do
+not satisfy such assumptions. I propose to use theoretically motivated
+Reinforcement Learning to efficiently learn human-understandable robot policies
+that overcome these challenges.
+
+Reinforcement Learning (RL) has been shown to be a powerful tool for learning
+about ongoing interactions between a robot and its
+environment, but much of the existing theory
+supporting RL only applies to problems with discrete state and action
+spaces, such as navigation on a grid.
+Reinforcement learning methods have been successfully applied to a variety of
+operations research and cyberphysical systems problems,
+but have not been broadly deployed for fundamentally high-dimensional and
+continuous robotic systems. Though it has been suggested that Deep RL capably
+extends RL to continuous spaces, my paper in submission to the 2019
+International Conference on Robotics and Automation (ICRA) suggests that Deep RL
+is not yet empirically capable of solving even simple robotic problems. 
+
+All is not lost, though; I hypothesize that insights from discrete RL can be
+extended to the continuous case. I propose a re-examination of prior work in
+simplifying large discrete environments, with a view toward
+creating extensions of this theory to continuous state and action spaces. I will
+develop both theoretic and empirical demonstrations that it is possible to learn
+\marginnote{Here's a math margin note: $y = Ax + b$}
+simple representations amenable to discrete RL from continuous environments. In
+this way, the efficiency and theoretical guarantees that discrete RL enjoys can
+be extended to fundamentally continuous problems. This discrete representation
+generation will also make robot behavior more transparent to human supervisors
+and other users of my proposed system. If I instead find that this is not
+possible, my work will open up new avenues of research in continuous RL as I
+explore how these problems can be solved without discrete tools.
+
+More precisely, the starting point for my research will be to use funnel
+libraries to discretize a robot's environment using a
+  model of the true dynamics. This is related to existing work that
+seeks to reason over funnels using formal logic,
+and to prior work in the control of cyber-physical
+systems, but I will instead use discrete RL
+algorithms in the generated discrete space to learn an approximately optimal
+\emph{discrete} policy. Note that this discrete policy induces a
+\emph{continuous} policy in which a single controller is used for all
+continuous states corresponding to one discrete state. This part of my work will
+extend prior work on RL by giving theoretical bounds on the sub-optimality of
+the induced continuous policy. I will then expand the scope of my research by
+investigating how the induced continuous policy may be used to change the
+discrete representation (e.g., by making the discrete representation more
+fine-grained near high reward regions). These steps of policy learning and
+discretization adjustment could then be run in a loop, which I will seek to
+prove converges to a near-optimal policy. I hypothesize that, as the discrete
+representation adapts to the dynamics that the robot perceives, it may become
+more efficient for discrete RL and more meaningful to human observers. I will
+seek to prove this hypothesis both theoretically and empirically using my full
+framework.
+
+Note that my framework exposes an important opportunity for human cooperation
+and intervation in its intermediate stage, before representation generation and
+policy learning are run in a loop. Semi-autonomous learning may be desirable in
+many near term applications of robotic autonomy, such as off-road navigation of
+supply transport vehicles. In my framework, a human user could easily specify a
+domain-specific discretization of a continuous task using prior knowledge,
+which would then be used for discrete RL as described previously. In this way, human
+\marginnote{This is a margin note on a non-title page. It fits neatly within the
+page, and is offset slightly from the outside edge.}
+knowledge can be used to bootstrap learning or safeguard against learning
+failure in time- or safety-critical applications. Even in the full version of my
+framework, human-provided discretizations could be used to ``warm-start''
+learning. These opportunities for human-tunable learning clearly align well with
+the Army's near term Robotics and Autonomous Systems (RAS) strategic
+priorities for semi-autonomous systems.
+
+\subsection*{Evaluation of Success}
+In addition to the theoretical contributions that I intend to make to the
+continuous RL literature, I intend to assess the success of my method
+empirically through evaluation on a series of increasingly realistic
+environments. I will first test my method on simple simulated models of
+differential drive vehicles in environmental dynamics defined by differential
+equations with external disturbances. I will then leverage my lab's extensive
+experience with robotic simulation to test my method in more realistic
+environments defined in physics simulators such as Gazebo. Finally, I will test
+my method on real robots by controlling Rice's aerial drones or my group's UR5
+and Fetch robots. This series of tests will establish the success of my method
+on a broad class of continuous problems with external disturbances, and show
+the applicability of my proposed method to robotics in the real world.
+
+\section*{Army Impacts}
+This proposal is intended to respond directly to the U.S. Army Broad Agency
+Announcement (BAA) W911NF-17-S-0002-03. More specifically, this
+proposal falls under section II.A.1.c.i.(4): \emph{Intelligent Systems}. My
+research aims to address the criticism that machine learning for robotics
+``still lacks the rigor, agility, and adaptation'' necessary for deployment
+in changing or unknown environments. The BAA calls for learning systems that
+``can continuously learn and evolve to changing context and environment'' and
+``deal with incorrect input.'' My proposed research is a prime example of such a
+system; the RL setting is well-poised for online learning and allows easy
+incorporation of probabilistic noise models or error models. Furthermore, as
+detailed above, my framework could achieve new levels of robustness by
+integrating with human operators in- or on-the-loop of learning. In an
+adversarial setting where a combatant attempts to misdirect learning, a human
+could intervene in the representation generation portion of my framework to
+prevent adverse effects. Thus, my proposed research clearly advances the Army's
+interest in advanced machine learning and intelligent systems.
+
+\section*{Service and Societal Impacts}
+My proposed research will result in a new framework for autonomous behavior in
+unmodeled continuous environments. This framework has the potential to
+dramatically expand the capability of Army robots to perform in complex
+environments. Looking beyond Army interests, my method
+could support autonomous systems which magnify first responders' abilities in
+the face of natural disasters and other emergency settings. My research will
+contribute to the fundamental scientific literature on continuous RL and
+establish new theoretical guarantees for the use of RL in robotics, paving the
+way for further developments in this area. I will also engage with the public
+through science communication initiatives such as publishing popular science
+articles, conducting outreach as the host of the Rice Computer Science podcast,
+and encouraging popular engagement with STEM by developing outreach programs
+that focus on creativity and free exploration. Finally, I am committed to making
+all of the empirical analysis that I conduct during my research open source and
+easily reproducible by continuing to follow industry best practices, such as
+packaging all research code in Docker containers which can be easily shared.
+
+\end{document}

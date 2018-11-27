@@ -1,0 +1,93 @@
+\documentclass{article}
+
+\usepackage{styles/cannon_handout}
+
+\title{Test Math Document}
+\author{William Cannon Lewis II}
+\date{\today}
+
+\begin{document}
+
+\onehalfspacing
+
+\maketitle
+
+\section*{Problem 1}
+\begin{enumerate}[label=(\alph*)]
+\item We claim that if $X_n \conv{D} X$ and $Y_n \conv{D} Y$, it does \emph{not} follow that $(X_n, Y_n) \conv{D} (X,Y)$. To see this, consider $X_n \sim \mathcal{N}(0,1)$, $Y_n = -X_n$, $X \sim \mathcal{N}(0,1)$, $Y = -X$. Clearly $X_n \conv{D} X$ and $Y_n \conv{D} Y$ by the symmetry of the Normal distribution. However, $(X_n, Y_n)$ converges in distribution to a joint Gaussian which has nonzero probability density only on the line $y = -x$, whereas $(X,Y)$ has nonzero probability density only on the line $y = x$. Thus $(X_n,Y_n)$ does not converge in distribution to $(X,Y)$. $\square$ 
+
+Now, let us show that $X_n \conv{P} X$ and $Y_n \conv{P} Y$ implies $(X_n, Y_n) \conv{P} (X,Y)$. More precisely, we want to show that $P(|(X_n,Y_n) - (X,Y)| > \epsilon) \to 0$ as $n \to \infty$. Consider:
+\begin{align*}
+    P(|(X_n,Y_n) - (X,Y)| > \epsilon) &\leq P(|X_n - X| + |Y_n - Y| > \epsilon) \\
+    &\leq P(|X_n - X| \geq \frac{\epsilon}{2}) + P(|Y_n - Y| \geq \frac{\epsilon}{2}) 
+\end{align*}
+By definition of convergence in probability, the right side above goes to 0 as $n \to \infty$, and thus $(X_n,Y_n) \conv{P} (X,Y)$. $\square$
+\end{enumerate}
+
+\section*{Problem 2}
+\begin{enumerate}[label=(\alph*)]
+\item Consider $P(\lim_{n\to\infty} X_{N(n)} \neq X)$. Then:
+\begin{align*}
+    \sum_{n=1}^\infty P(X_{N(n)} \neq X) &\leq C \cdot \sum_{n=1}^\infty P(X_n \neq X)
+\end{align*}
+for some constant $C$. The previous inequality holds because $N(n) \to \infty$ and so the terms $N(n)$ must form a subsequence of $n = 1,2,\ldots$ under suitable reordering and repetition. Since $X_n \conv{a.s.} X$, $\sum_{n=1}^\infty P(X_n \neq X) < \infty$. This implies that $\sum_{n=1}^\infty P(X_{N(n)} \neq X) < \infty$, and so by Borel-Cantelli I $X_N(n) \conv{a.s.} X$. $\square$
+
+\item Let $X_n = \mathbf{1}_{[\frac{j}{2k},\frac{j+1}{2k}]}$, where $k = \log_2(n)$ and $j = n - 2^k$ under the uniform probability measure on $[0,1]$. Then clearly $X_n \conv{P} 0$. Furthermore, $P(X_n = 1) = \frac{1}{2^k} = \frac{1}{n}$. Thus, we can choose $N(n)$ to pick each $X_m$ $m$ times for each $m \in \mathbb{N}$, so that 
+\begin{align*}
+    \sum_{n=1}^\infty P(X_{N(n)} = 1) &= \sum_{m=1}^\infty P(X_m = 1) \cdot m\\
+    &= \sum_{m=1}^\infty m \cdot \frac{1}{m} \\
+    &= \sum_{m=1}^\infty 1 \\
+    &= \infty
+\end{align*}
+Thus, by Borel-Cantelli II, $X_{N(n)} \conv{a.s.} 1$. $\square$
+\end{enumerate}
+
+\section*{Problem 3}
+\begin{enumerate}[label=(\alph*)]
+\item Recall $f_{X_1}(x) = e^{-x}$. Thus:
+\begin{align*}
+    \expect{e^{\lambda X_1}} &= \int_0^\infty e^{\lambda x} e^{-x}dx \\
+    &= \int_0^\infty e^{x(\lambda - 1)}dx \\
+    &= \left. \frac{e^{x(\lambda - 1)}}{\lambda - 1} \right\vert_0^\infty
+\end{align*}
+The above is only finite when $\lambda < 1$, in which case it evaluates to $\frac{-1}{\lambda - 1}$.
+
+\item Calculating:
+\begin{align*}
+    \expect{e^{\lambda S_n}} &= \expect{e^{\lambda(X_1 + \ldots + X_n)}} \\
+    &= \expect{e^{\lambda X_1}} \cdots \expect{e^{\lambda X_n}} &\text{By i.i.d.}\\
+    &= \left(\frac{-1}{\lambda - 1}\right)^n &\text{If $\lambda < 1$}
+\end{align*}
+
+\item Let us apply Markov's Inequality for all $a > 0$:
+\begin{align*}
+    P(S_n \geq a) &\leq \frac{\expect{e^{\lambda S_n}}}{e^{\lambda a}} \\
+    \implies \ln(P(S_n \geq a)) &\leq (\lambda a)^{-1} \ln(\expect{e^{\lambda S_n}})\\
+    \implies \lambda a \ln(P(S_n \geq a)) &\leq n \ln\left(\frac{-1}{\lambda - 1}\right) &\text{If $\lambda < 1$} \\
+    \intertext{If we let $a = K\cdot n$ above, we get:} 
+    \lambda (K\cdot n) \ln(P(S_n \geq K\cdot n)) &\leq n \ln\left(\frac{-1}{\lambda - 1}\right) \\
+    \implies n^{-1} \ln(P(S_n \geq a)) &\leq \frac{\ln\left(\frac{\lambda - 1}{\lambda}\right)}{K\cdot n}
+\end{align*}
+\end{enumerate}
+
+\section*{Problem 4}
+\begin{enumerate}[label=(\alph*)]
+\item Yes, this series is tight since most of the probability mass stays concentrated at 0, and the mass moving toward $\infty$ gets less and less.
+\item Let $X$ be a member of the set of random variables with mean 1 and variance 0. Then let $\epsilon > 0$ be given, and let us consider compact sets $K_\epsilon$ of the form $[-N,N]$ for $N \in \mathbb{N}$. We have:
+\begin{align*}
+    P(X \in K_\epsilon^c) &= P(|X| > N) \\
+    &\leq \frac{\expect{X^2}}{N^2} \\
+    &= \frac{1}{N^2}
+\end{align*}
+Thus for a given $\epsilon$, we can find an accompanying $N$ and ordering of the family under consideration such that the family is tight. 
+\item Yes, this family is tight because we can always take the compact set under consideration for a given $\epsilon$ to be a union over the component variables' bounds. 
+\item No, this sequence is not tight because $\lim_{n\to\infty}\phi_n$ is a Dirac delta function, which is not continuous at 0, and so the $X_n$ are not tight by Levy's continuity theorem.
+\end{enumerate}
+
+\section*{Problem 5}
+I do not attempt this extra credit.
+
+\section*{Problem 6}
+I do not attempt this extra credit.
+
+\end{document}
